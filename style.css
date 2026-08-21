@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+  --verde-musgo: #2f3e2e;
+  --amarelo-mel: #f3c13a;
+  --bege-suave: #f7f4ed;
+  --preto: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bege-suave);
+  color: var(--preto);
+  line-height: 1.6;
+}
+
+header {
+  background-color: black;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.logo-container {
+  background-color: black;
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+nav a {
+  color: var(--bege-suave);
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: var(--amarelo-mel);
+}
+
+.hero {
+  background-image: url('https://media.istockphoto.com/id/539069891/pt/foto/parque-central-de-nova-york-city.jpg?s=612x612&w=0&k=20&c=w4GPFV07uuYX77einFLVxsLQdIxvtdkTIU_XnjCaslc=');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 120px 20px;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(47, 62, 46, 0.7);
+}
+
+.hero-text {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: auto;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.hero h1 span {
+  color: var(--amarelo-mel);
+}
+
+.buttons {
+  margin-top: 25px;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 24px;
+  border-radius: 25px;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.btn.whatsapp {
+  background-color: #25d366;
+}
+
+.btn.instagram {
+  background-color: #c13584;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.catalogo {
+  width: 100%;
+  background-color: var(--verde-musgo);
+  padding: 80px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.catalogo h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--bege-suave);
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+}
+
+.categoria {
+  margin-bottom: 60px;
+  width: 100%;
+}
+
+.categoria h3 {
+  color: var(--amarelo-mel);
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.card {
+  background: var(--bege-suave);
+  border-radius: 12px;
+  overflow: hidden;
+  width: 250px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card p {
+  padding: 10px;
+  font-weight: 600;
+  background-color: var(--amarelo-mel);
+  color: var(--preto);
+}
+
+footer {
+  background-color: var(--verde-musgo);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: var(--amarelo-mel);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero {
+    padding: 80px 10px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+
+.social-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1000;
+}
+
+.social-float a {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.social-float a:hover {
+  transform: scale(1.15);
+}
+
+.social-float img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- ESTILOS DO MODAL CORRIGIDOS E SEM REPETIÇÃO --- */
+.zoom-img {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.zoom-img:hover {
+  transform: scale(1.05);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: auto;
+  max-width: 90%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+  animation: surgir 0.3s ease;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 45px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close:hover {
+  color: var(--amarelo-mel);
+}
+
+@keyframes surgir {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

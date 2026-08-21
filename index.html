@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Honey Bee - Cestas Personalizadas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <img src="images/logo.png" alt="Logo Honey Bee" class="logo" />
+      <nav>
+        <a href="#inicio">Início</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="inicio" class="hero">
+    <div class="hero-text">
+      <h1>Bem-vindo à <span>Honey Bee</span></h1>
+      <p>As melhores cestas você encontra por aqui!  
+      Proporcionando experiências únicas com presentes afetivos para alegrar o seu momento.  
+      Fique à vontade para acessar nosso perfil e fazer um pedido via WhatsApp.</p>
+
+      <div class="buttons">
+        <a href="https://wa.me/818090306709" target="_blank" class="btn whatsapp">WhatsApp</a>
+        <a href="https://www.instagram.com/b_honey.bee" target="_blank" class="btn instagram">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalogo" class="catalogo">
+    <h2>Nosso Catálogo</h2>  
+
+    <div class="categoria">
+      <h3>Cestas de Café</h3>
+      <div class="grid">
+        <div class="card">
+          <img src="images/cesta1.png" alt="Cesta de Café 1" class="zoom-img">
+          <p>Cesta Café Clássica</p>
+        </div>
+        <div class="card">
+          <img src="images/cestaromantica.png" alt="Cesta de Café 2" class="zoom-img">
+          <p>Cesta Romântica</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="categoria">
+      <h3>Coleção Natal/Diversos</h3>
+      <div class="grid">
+        <div class="card">
+          <img src="images/cestanatal.png" alt="Cesta Natalina 1" class="zoom-img">
+          <p>Box Natal Luxo</p>
+        </div>
+        <div class="card">
+          <img src="images/diversos.png" alt="Cesta Natalina 2" class="zoom-img">
+          <p>Cesta de Natal Tradicional</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contato">
+    <p>© 2026 Honey Bee | Cestas e Experiências Afetivas</p>
+    <p>Siga-nos no <a href="https://www.instagram.com/b_honey.bee" target="_blank" rel="noopener">Instagram</a></p>
+  </footer>
+
+  <div class="social-float">
+    <a href="https://wa.me/818090306709" target="_blank" rel="noopener">
+      <img src="images/whats.png" alt="WhatsApp" />
+    </a>
+    <a href="https://instagram.com/b_honey.bee" 
+       onclick="window.location='instagram://user?username=b_honey.bee'" 
+       target="_blank" rel="noopener">
+      <img src="images/instagram.png" alt="Instagram" />
+    </a>
+  </div>
+
+  <div id="imgModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
