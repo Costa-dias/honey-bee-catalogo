@@ -1,1 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-bege-suave text-preto;
+    line-height: 1.6;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-block px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 hover:opacity-85;
+  }
+  .btn-whatsapp {
+    @apply bg-whatsapp hover:bg-whatsapp-dark;
+  }
+  .btn-instagram {
+    @apply bg-instagram;
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+  }
+  .zoom-img {
+    @apply cursor-pointer transition-transform duration-300 hover:scale-105;
+  }
+}
 
