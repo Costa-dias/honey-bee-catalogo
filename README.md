@@ -2,7 +2,7 @@
 
 Um catálogo web desenvolvido para estabelecimentos de café da manhã, doces e panificação. O projeto foca em oferecer uma navegação simples para os clientes e facilitar o processo de pedidos.
 
-🔗 **Acesse o projeto online:** [honey-bee-catalogo1.netlify.app](https://honey-bee-catalogo1.netlify.app/)
+🔗 **Acesse o projeto online:** honey-bee-catalogo.onrender.com/
 
 ---
 
