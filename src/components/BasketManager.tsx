@@ -123,13 +123,19 @@ export function BasketManager() {
     setUploading(true);
     setError(null);
 
-    const fileExt = file.name.split('.').pop();
+    // Sanitização do nome e extensão do arquivo para prevenir Path Traversal
+    const fileExt = file.name.split('.').pop()?.replace(/[^a-zA-Z0-9]/g, '') || '';
     const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = `${fileName}`;
+
+    if (fileName.includes('..') || fileName.includes('/') || fileName.includes('\\')) {
+      setError('Caminho ou nome de arquivo inválido.');
+      setUploading(false);
+      return;
+    }
 
     const { error: uploadError } = await supabase.storage
       .from('baskets')
-      .upload(filePath, file);
+      .upload(fileName, file);
 
     if (uploadError) {
       setError(uploadError.message);
@@ -137,7 +143,7 @@ export function BasketManager() {
       return;
     }
 
-    const { data: urlData } = supabase.storage.from('baskets').getPublicUrl(filePath);
+    const { data: urlData } = supabase.storage.from('baskets').getPublicUrl(fileName);
 
     setEditing({ ...editing, image_url: urlData.publicUrl });
     setUploading(false);
@@ -442,4 +448,3 @@ export function BasketManager() {
     </div>
   );
 }
-
