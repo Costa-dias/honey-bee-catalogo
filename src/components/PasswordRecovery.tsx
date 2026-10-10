@@ -61,8 +61,17 @@ export function PasswordRecovery({ hasSession, onDone }: Props) {
         </div>
 
         {!hasSession ? (
-          <div className="text-center text-sm text-red-700">
-            O link de recuperação é inválido ou expirou. Solicite um novo pelo administrador do Supabase.
+          <div className="flex flex-col gap-5">
+            <div role="alert" className="text-center text-sm text-red-700">
+              Este link de recuperação expirou ou já foi utilizado. Volte ao login e solicite um novo link.
+            </div>
+            <button
+              type="button"
+              onClick={onDone}
+              className="btn bg-verde-musgo hover:bg-verde-musgo-dark w-full"
+            >
+              Voltar ao login
+            </button>
           </div>
         ) : complete ? (
           <div className="flex flex-col items-center gap-5">
