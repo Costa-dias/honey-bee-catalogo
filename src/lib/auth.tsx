@@ -32,7 +32,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
       setSession(newSession);
 
-      if (event === 'PASSWORD_RECOVERY') {
+      if (event === 'PASSWORD_RECOVERY' || (recoveryLinkAtStartup && newSession)) {
+        // A recovery redirect can emit SIGNED_IN after URL detection; the startup
+        // marker preserves the intent if that event races with getSession().
         setPasswordRecovery(true);
         clearRecoveryUrl();
       } else if (event === 'SIGNED_OUT') {

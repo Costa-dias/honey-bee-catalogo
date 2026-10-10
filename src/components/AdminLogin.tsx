@@ -15,8 +15,12 @@ function getRecoveryErrorMessage(error: unknown): string {
   const code = authError?.code;
   const status = authError?.status;
 
-  if (code === 'over_email_send_rate_limit' || status === 429) {
-    return 'O serviço de e-mail atingiu um limite temporário. Aguarde até uma hora antes de pedir outro link; se já solicitou um, use o mais recente.';
+  if (code === 'over_email_send_rate_limit') {
+    return 'O Supabase atingiu o limite de e-mails de recuperação. Aguarde até uma hora e use o link mais recente que recebeu.';
+  }
+
+  if (status === 429) {
+    return 'Aguarde alguns segundos antes de solicitar outro link. Confira primeiro sua caixa de entrada, pois o pedido pode já ter sido processado.';
   }
 
   if (code === 'redirect_to_not_allowed') {
@@ -28,7 +32,7 @@ function getRecoveryErrorMessage(error: unknown): string {
   }
 
   if (status === 0 || authError?.name === 'AuthRetryableFetchError' || error instanceof TypeError) {
-    return 'Não foi possível conectar ao serviço de autenticação. Verifique a conexão e tente novamente.';
+    return 'Não consegui confirmar a resposta do Supabase. Confira sua caixa de entrada antes de reenviar; se o e-mail não chegar, aguarde alguns minutos e tente uma vez.';
   }
 
   return 'Não foi possível enviar o link agora. Verifique o e-mail e tente novamente.';
