@@ -1,5 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
 
+// Capture the redirect marker before createClient starts Supabase Auth
+// initialization, so the React listener can recover even if the SDK event
+// fires before AuthProvider mounts.
+export const recoveryLinkAtStartup = (() => {
+  if (typeof window === 'undefined') return false;
+
+  const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+  const queryParams = new URLSearchParams(window.location.search);
+
+  return hashParams.get('type') === 'recovery' || queryParams.get('recovery') === '1';
+})();
+
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
