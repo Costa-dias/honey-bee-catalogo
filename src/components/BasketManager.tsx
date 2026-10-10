@@ -303,7 +303,7 @@ export function BasketManager() {
                   value={editing.name}
                   onChange={(e) => setEditing({ ...editing, name: e.target.value })}
                   placeholder="Ex: Cesta Café Clássica"
-                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-none focus:ring-2 focus:ring-amarelo-mel"
+                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel"
                 />
               </div>
 
@@ -316,7 +316,7 @@ export function BasketManager() {
                   value={editing.category}
                   onChange={(e) => setEditing({ ...editing, category: e.target.value })}
                   placeholder="Ex: Cestas de Café"
-                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-none focus:ring-2 focus:ring-amarelo-mel"
+                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel"
                 />
               </div>
 
@@ -329,7 +329,7 @@ export function BasketManager() {
                   onChange={(e) => setEditing({ ...editing, description: e.target.value })}
                   placeholder="Descrição da cesta, itens inclusos, etc."
                   rows={3}
-                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-none focus:ring-2 focus:ring-amarelo-mel resize-none"
+                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel resize-none"
                 />
               </div>
 
@@ -345,7 +345,7 @@ export function BasketManager() {
                     value={editing.price}
                     onChange={(e) => setEditing({ ...editing, price: e.target.value })}
                     placeholder="0,00"
-                    className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-none focus:ring-2 focus:ring-amarelo-mel"
+                    className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel"
                   />
                 </div>
                 <div>
@@ -359,7 +359,7 @@ export function BasketManager() {
                     onChange={(e) =>
                       setEditing({ ...editing, display_order: parseInt(e.target.value) || 0 })
                     }
-                    className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-none focus:ring-2 focus:ring-amarelo-mel"
+                    className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel"
                   />
                 </div>
               </div>
@@ -412,7 +412,7 @@ export function BasketManager() {
                   type="checkbox"
                   checked={editing.is_visible}
                   onChange={(e) => setEditing({ ...editing, is_visible: e.target.checked })}
-                  className="w-5 h-5 rounded accent-amarelo-mel"
+                  className="w-5 h-5 rounded-sm accent-amarelo-mel"
                 />
                 <span className="text-sm text-verde-musgo">
                   Visível no catálogo público

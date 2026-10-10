@@ -199,7 +199,7 @@ export function AdminLogin({ onBack }: Props) {
                     value={inviteCode}
                     onChange={(e) => setInviteCode(e.target.value)}
                     placeholder="Código de convite"
-                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-none focus:ring-2 focus:ring-amarelo-mel transition-all"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel transition-all"
                   />
                 </div>
               )}
@@ -216,7 +216,7 @@ export function AdminLogin({ onBack }: Props) {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="E-mail"
                   autoComplete="email"
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-none focus:ring-2 focus:ring-amarelo-mel transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel transition-all"
                 />
               </div>
 
@@ -233,7 +233,7 @@ export function AdminLogin({ onBack }: Props) {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Senha"
                     autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-none focus:ring-2 focus:ring-amarelo-mel transition-all"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel transition-all"
                   />
                 </div>
               )}

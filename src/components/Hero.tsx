@@ -16,10 +16,10 @@ export function Hero() {
       <div className="absolute inset-0 bg-verde-musgo/75" />
 
       <div className="relative z-10 max-w-2xl mx-auto animate-fade-in">
-        <h1 className="font-serif text-4xl md:text-5xl mb-5 leading-tight">
+        <h1 className="font-serif text-4xl md:text-5xl mb-5 leading-tight md:leading-none">
           Bem-vinda à <span className="text-amarelo-mel">Honey Bee</span>
         </h1>
-        <p className="text-base md:text-lg text-bege-suave/90 leading-relaxed mb-8">
+        <p className="text-base md:text-lg text-bege-suave/90 leading-relaxed md:leading-7 mb-8">
           As melhores cestas você encontra por aqui! Proporcionando experiências
           únicas com presentes afetivos para alegrar o seu momento. Fique à
           vontade para acessar nosso perfil e fazer um pedido via WhatsApp.

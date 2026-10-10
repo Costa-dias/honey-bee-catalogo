@@ -1,10 +1,22 @@
 services:
   - type: web
     name: honey-bee-catalogo
-    env: static
-    buildCommand: npm run build
+    runtime: static
+    buildCommand: npm ci && npm run build
     staticPublishPath: ./dist
     headers:
       - path: /*
         name: Content-Security-Policy
-        value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://*.supabase.co https://images.pexels.com; connect-src 'self' https: https://*.supabase.co; frame-ancestors 'none'; form-action 'self';"
+        value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://xpmvisxjiddodiwobkha.supabase.co wss://xpmvisxjiddodiwobkha.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';"
+      - path: /*
+        name: X-Content-Type-Options
+        value: "nosniff"
+      - path: /*
+        name: X-Frame-Options
+        value: "DENY"
+      - path: /*
+        name: Referrer-Policy
+        value: "strict-origin-when-cross-origin"
+      - path: /*
+        name: Permissions-Policy
+        value: "geolocation=(), microphone=(), camera=()"

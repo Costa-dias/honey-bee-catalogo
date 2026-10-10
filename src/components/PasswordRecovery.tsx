@@ -30,17 +30,22 @@ export function PasswordRecovery({ hasSession, onDone }: Props) {
     }
 
     setSaving(true);
-    const { error: updateError } = await supabase.auth.updateUser({ password });
-    setSaving(false);
-
-    if (updateError) {
-      setError(updateError.message);
-      return;
+    try {
+      const { error: updateError } = await supabase.auth.updateUser({ password });
+      if (updateError) {
+        setError(updateError.code === 'weak_password'
+          ? 'Escolha uma senha mais forte, que não seja conhecida por vazamentos.'
+          : updateError.message);
+        return;
+      }
+      setComplete(true);
+      setPassword('');
+      setConfirmation('');
+    } catch {
+      setError('Não foi possível confirmar a alteração. Confira sua conexão; tente entrar com a nova senha antes de solicitar outro link.');
+    } finally {
+      setSaving(false);
     }
-
-    setComplete(true);
-    setPassword('');
-    setConfirmation('');
   };
 
   return (
@@ -100,7 +105,7 @@ export function PasswordRecovery({ hasSession, onDone }: Props) {
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Nova senha (mínimo 8 caracteres)"
                 aria-label="Nova senha"
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-none focus:ring-2 focus:ring-amarelo-mel transition-all"
+                className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel transition-all"
               />
             </div>
 
@@ -118,7 +123,7 @@ export function PasswordRecovery({ hasSession, onDone }: Props) {
                 onChange={(event) => setConfirmation(event.target.value)}
                 placeholder="Confirme a nova senha"
                 aria-label="Confirme a nova senha"
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-none focus:ring-2 focus:ring-amarelo-mel transition-all"
+                className="w-full pl-10 pr-4 py-3 rounded-lg border border-verde-musgo/20 bg-bege-claro focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel transition-all"
               />
             </div>
 

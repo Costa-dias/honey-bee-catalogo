@@ -142,7 +142,7 @@ export function StockManager() {
       </div>
 
       {productNames.length > 0 && (
-        <div className="mb-8 bg-white rounded-xl shadow-sm p-5">
+        <div className="mb-8 bg-white rounded-xl shadow-xs p-5">
           <h3 className="font-serif text-lg text-verde-musgo mb-4 flex items-center gap-2">
             <PackageIcon size={20} />
             Saldo por produto
@@ -187,7 +187,7 @@ export function StockManager() {
           value={filterProduct}
           onChange={(e) => setFilterProduct(e.target.value)}
           placeholder="Filtrar por produto..."
-          className="w-full max-w-xs px-4 py-2 rounded-lg border border-verde-musgo/20 bg-white focus:outline-none focus:ring-2 focus:ring-amarelo-mel text-sm"
+          className="w-full max-w-xs px-4 py-2 rounded-lg border border-verde-musgo/20 bg-white focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel text-sm"
         />
       </div>
 
@@ -202,7 +202,7 @@ export function StockManager() {
           <p className="text-sm mt-1">Clique em "Novo Registro" para começar.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden overflow-x-auto">
+        <div className="bg-white rounded-xl shadow-xs overflow-hidden overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-verde-musgo text-bege-suave">
               <tr>
@@ -301,7 +301,7 @@ export function StockManager() {
                     setNewMovement({ ...newMovement, product_name: e.target.value })
                   }
                   placeholder="Ex: Café gourmet 500g"
-                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-none focus:ring-2 focus:ring-amarelo-mel"
+                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel"
                 />
               </div>
 
@@ -348,7 +348,7 @@ export function StockManager() {
                   onChange={(e) =>
                     setNewMovement({ ...newMovement, quantity: e.target.value })
                   }
-                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-none focus:ring-2 focus:ring-amarelo-mel"
+                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel"
                 />
               </div>
 
@@ -361,7 +361,7 @@ export function StockManager() {
                   onChange={(e) => setNewMovement({ ...newMovement, notes: e.target.value })}
                   placeholder="Ex: Compra de fornecedor, ajuste de inventário..."
                   rows={2}
-                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-none focus:ring-2 focus:ring-amarelo-mel resize-none"
+                  className="w-full px-4 py-2.5 rounded-lg border border-verde-musgo/20 bg-white focus:outline-hidden focus:ring-2 focus:ring-amarelo-mel resize-none"
                 />
               </div>
             </div>
