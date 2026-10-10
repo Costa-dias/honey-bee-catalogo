@@ -56,7 +56,7 @@ export function AdminLogin({ onBack }: Props) {
     if (mode === 'recover') {
       try {
         const { error: recoveryError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-          redirectTo: window.location.origin,
+          redirectTo: `${window.location.origin}/?recovery=1`,
         });
 
         if (recoveryError) {
