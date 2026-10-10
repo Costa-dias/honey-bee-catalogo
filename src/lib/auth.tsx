@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { Session } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { recoveryLinkAtStartup, supabase } from '@/lib/supabase';
 
-const initialRecoveryParams =
-  typeof window === 'undefined'
-    ? null
-    : new URLSearchParams(window.location.hash.replace(/^#/, ''));
-const initialRecoveryAccessToken = initialRecoveryParams?.get('access_token') ?? null;
-const initialRecoveryLink = initialRecoveryParams?.get('type') === 'recovery';
+const clearRecoveryUrl = () => {
+  const url = new URL(window.location.href);
+  url.searchParams.delete('recovery');
+  url.hash = '';
+  window.history.replaceState(null, document.title, url.pathname + url.search);
+};
 
 type AuthContextType = {
   session: Session | null;
@@ -34,11 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (event === 'PASSWORD_RECOVERY') {
         setPasswordRecovery(true);
-        window.history.replaceState(
-          null,
-          document.title,
-          window.location.pathname + window.location.search,
-        );
+        clearRecoveryUrl();
       } else if (event === 'SIGNED_OUT') {
         setPasswordRecovery(false);
       }
@@ -50,21 +46,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSession(data.session);
       setLoading(false);
 
-      // The SDK may finish parsing the recovery URL before this component's
-      // listener is registered. The captured token lets us recognize that
-      // already-established session without trusting a stale URL or session.
-      const sessionMatchesRecoveryLink =
-        initialRecoveryLink &&
-        initialRecoveryAccessToken &&
-        data.session?.access_token === initialRecoveryAccessToken;
-
-      if (sessionMatchesRecoveryLink) {
+      // The recovery marker is captured before the Supabase client initializes.
+      // Only an established session can enter the password form.
+      if (recoveryLinkAtStartup && data.session) {
         setPasswordRecovery(true);
-        window.history.replaceState(
-          null,
-          document.title,
-          window.location.pathname + window.location.search,
-        );
+        clearRecoveryUrl();
       }
     });
 
