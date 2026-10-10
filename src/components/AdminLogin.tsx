@@ -26,11 +26,8 @@ export function AdminLogin({ onBack }: Props) {
     setLoading(true);
 
     if (mode === 'recover') {
-      const redirectTo = new URL(window.location.origin);
-      redirectTo.searchParams.set('recovery', '1');
-
       const { error: recoveryError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: redirectTo.toString(),
+        redirectTo: window.location.origin,
       });
 
       setLoading(false);
