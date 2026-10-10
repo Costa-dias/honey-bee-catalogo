@@ -5,6 +5,8 @@ import { supabase } from '@/lib/supabase';
 type AuthContextType = {
   session: Session | null;
   loading: boolean;
+  passwordRecovery: boolean;
+  clearPasswordRecovery: () => void;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (email: string, password: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
@@ -15,6 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -22,8 +25,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
       setSession(newSession);
+
+      if (event === 'PASSWORD_RECOVERY') {
+        setPasswordRecovery(true);
+      } else if (event === 'SIGNED_OUT') {
+        setPasswordRecovery(false);
+      }
     });
 
     return () => {
@@ -46,7 +55,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ session, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider
+      value={{
+        session,
+        loading,
+        passwordRecovery,
+        clearPasswordRecovery: () => setPasswordRecovery(false),
+        signIn,
+        signUp,
+        signOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -57,4 +76,3 @@ export function useAuth() {
   if (!ctx) throw new Error('useAuth deve ser usado dentro de AuthProvider');
   return ctx;
 }
-
