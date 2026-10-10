@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // marker preserves the intent if that event races with getSession().
         setPasswordRecovery(true);
         clearRecoveryUrl();
-      } else if (event === 'SIGNED_OUT') {
+      } else if (event === 'SIGNED_OUT' && !recoveryLinkAtStartup) {
         setPasswordRecovery(false);
       }
     });
@@ -82,7 +82,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         session,
         loading,
         passwordRecovery,
-        clearPasswordRecovery: () => setPasswordRecovery(false),
+        clearPasswordRecovery: () => {
+          clearRecoveryUrl();
+          setPasswordRecovery(false);
+        },
         signIn,
         signUp,
         signOut,
