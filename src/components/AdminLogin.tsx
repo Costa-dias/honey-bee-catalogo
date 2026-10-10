@@ -10,6 +10,30 @@ type Props = {
 
 type Mode = 'login' | 'signup' | 'recover';
 
+function getRecoveryErrorMessage(error: unknown): string {
+  const authError = error as { code?: string; status?: number; name?: string };
+  const code = authError?.code;
+  const status = authError?.status;
+
+  if (code === 'over_email_send_rate_limit' || status === 429) {
+    return 'O serviço de e-mail atingiu um limite temporário. Aguarde até uma hora antes de pedir outro link; se já solicitou um, use o mais recente.';
+  }
+
+  if (code === 'redirect_to_not_allowed') {
+    return 'A URL de retorno da recuperação não está autorizada na configuração do Supabase.';
+  }
+
+  if (code === 'captcha_verification_failed') {
+    return 'A validação de segurança falhou. Atualize a página e tente novamente.';
+  }
+
+  if (status === 0 || authError?.name === 'AuthRetryableFetchError' || error instanceof TypeError) {
+    return 'Não foi possível conectar ao serviço de autenticação. Verifique a conexão e tente novamente.';
+  }
+
+  return 'Não foi possível enviar o link agora. Verifique o e-mail e tente novamente.';
+}
+
 export function AdminLogin({ onBack }: Props) {
   const { signIn, signUp } = useAuth();
   const [mode, setMode] = useState<Mode>('login');
@@ -26,17 +50,30 @@ export function AdminLogin({ onBack }: Props) {
     setLoading(true);
 
     if (mode === 'recover') {
-      const { error: recoveryError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: window.location.origin,
-      });
+      try {
+        const { error: recoveryError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: window.location.origin,
+        });
 
-      setLoading(false);
-      if (recoveryError) {
-        setError('Não foi possível enviar o link agora. Verifique o e-mail e tente novamente.');
-        return;
+        if (recoveryError) {
+          // Keep account and address details out of client logs.
+          console.warn('[password-recovery] request failed', {
+            code: recoveryError.code,
+            status: recoveryError.status,
+          });
+          setError(getRecoveryErrorMessage(recoveryError));
+          return;
+        }
+
+        setRecoverySent(true);
+      } catch (recoveryError) {
+        console.warn('[password-recovery] request could not reach Auth', {
+          name: recoveryError instanceof Error ? recoveryError.name : 'UnknownError',
+        });
+        setError(getRecoveryErrorMessage(recoveryError));
+      } finally {
+        setLoading(false);
       }
-
-      setRecoverySent(true);
       return;
     }
 
