@@ -3,11 +3,18 @@ import { AuthProvider, useAuth } from '@/lib/auth';
 import { PublicSite } from '@/components/PublicSite';
 import { AdminLogin } from '@/components/AdminLogin';
 import { AdminPanel } from '@/components/AdminPanel';
+import { PasswordRecovery } from '@/components/PasswordRecovery';
 
 type View = 'public' | 'admin';
 
 function AppContent() {
-  const { session, loading } = useAuth();
+  const {
+    session,
+    loading,
+    passwordRecovery,
+    clearPasswordRecovery,
+    signOut,
+  } = useAuth();
   const [view, setView] = useState<View>('public');
 
   if (loading) {
@@ -17,6 +24,19 @@ function AppContent() {
           Honey Bee
         </div>
       </div>
+    );
+  }
+
+  if (passwordRecovery) {
+    return (
+      <PasswordRecovery
+        hasSession={Boolean(session)}
+        onDone={async () => {
+          await signOut();
+          clearPasswordRecovery();
+          setView('admin');
+        }}
+      />
     );
   }
 
@@ -37,4 +57,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
