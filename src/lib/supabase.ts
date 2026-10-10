@@ -9,7 +9,12 @@ export const recoveryLinkAtStartup = (() => {
   const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
   const queryParams = new URLSearchParams(window.location.search);
 
-  return hashParams.get('type') === 'recovery' || queryParams.get('recovery') === '1';
+  return (
+    hashParams.get('type') === 'recovery' ||
+    hashParams.get('error_code') === 'otp_expired' ||
+    (hashParams.get('error') === 'access_denied' && hashParams.has('error_description')) ||
+    queryParams.get('recovery') === '1'
+  );
 })();
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
