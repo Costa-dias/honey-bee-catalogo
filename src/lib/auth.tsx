@@ -2,6 +2,13 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 import type { Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 
+const initialRecoveryParams =
+  typeof window === 'undefined'
+    ? null
+    : new URLSearchParams(window.location.hash.replace(/^#/, ''));
+const initialRecoveryAccessToken = initialRecoveryParams?.get('access_token') ?? null;
+const initialRecoveryLink = initialRecoveryParams?.get('type') === 'recovery';
+
 type AuthContextType = {
   session: Session | null;
   loading: boolean;
@@ -20,22 +27,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [passwordRecovery, setPasswordRecovery] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
-    });
+    let active = true;
 
     const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
       setSession(newSession);
 
       if (event === 'PASSWORD_RECOVERY') {
         setPasswordRecovery(true);
+        window.history.replaceState(
+          null,
+          document.title,
+          window.location.pathname + window.location.search,
+        );
       } else if (event === 'SIGNED_OUT') {
         setPasswordRecovery(false);
       }
     });
 
+    supabase.auth.getSession().then(({ data }) => {
+      if (!active) return;
+
+      setSession(data.session);
+      setLoading(false);
+
+      // The SDK may finish parsing the recovery URL before this component's
+      // listener is registered. The captured token lets us recognize that
+      // already-established session without trusting a stale URL or session.
+      const sessionMatchesRecoveryLink =
+        initialRecoveryLink &&
+        initialRecoveryAccessToken &&
+        data.session?.access_token === initialRecoveryAccessToken;
+
+      if (sessionMatchesRecoveryLink) {
+        setPasswordRecovery(true);
+        window.history.replaceState(
+          null,
+          document.title,
+          window.location.pathname + window.location.search,
+        );
+      }
+    });
+
     return () => {
+      active = false;
       listener.subscription.unsubscribe();
     };
   }, []);
@@ -73,6 +107,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth deve ser usado dentro de AuthProvider');
+  if (!ctx) throw new Error('useAuth deve ser usado dentro de um AuthProvider');
   return ctx;
 }
