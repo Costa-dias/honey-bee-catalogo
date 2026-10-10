@@ -47,6 +47,7 @@ export function AdminLogin({ onBack }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [recoverySent, setRecoverySent] = useState(false);
+  const [signupSent, setSignupSent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,9 +82,10 @@ export function AdminLogin({ onBack }: Props) {
       return;
     }
 
+    try {
     if (mode === 'signup') {
       const { data: isValid, error: rpcError } = await supabase
-        .rpc('verify_registration_code', { input_code: inviteCode.trim() });
+        .rpc('verify_registration_code', { input_code: inviteCode.trim(), input_email: email.trim().toLowerCase() });
 
       if (rpcError) {
         setError('Erro ao validar o código de convite.');
@@ -97,7 +99,7 @@ export function AdminLogin({ onBack }: Props) {
         return;
       }
 
-      const result = await signUp(email, password);
+      const result = await signUp(email, password, inviteCode);
 
       if (result.error) {
         setError(result.error);
@@ -105,13 +107,9 @@ export function AdminLogin({ onBack }: Props) {
         return;
       }
 
-      const { error: consumeError } = await supabase
-        .rpc('consume_registration_code', { input_code: inviteCode.trim() });
-
-      if (consumeError) {
-        // não bloqueia o cadastro já feito, apenas registra
-        console.warn('Erro ao consumir código de convite:', consumeError.message);
-      }
+      setSignupSent(true);
+      setInviteCode('');
+      setPassword('');
 
       setLoading(false);
     } else {
@@ -121,11 +119,17 @@ export function AdminLogin({ onBack }: Props) {
         setError(result.error);
       }
     }
+    } catch {
+      setError('Não foi possível conectar. Confira sua conexão e tente novamente.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const returnToLogin = () => {
     setMode('login');
     setRecoverySent(false);
+    setSignupSent(false);
     setError(null);
   };
 
@@ -163,6 +167,11 @@ export function AdminLogin({ onBack }: Props) {
             </p>
           </div>
 
+          {signupSent && (
+            <div role="status" className="mb-4 text-sm text-verde-musgo">
+              Cadastro recebido. Se for solicitada confirmação, confira sua caixa de entrada antes de fazer login.
+            </div>
+          )}
           {recoverySent ? (
             <div className="flex flex-col gap-4">
               <div role="status" className="bg-green-50 text-green-800 text-sm rounded-lg px-4 py-3 border border-green-200 text-center">
@@ -318,3 +327,4 @@ export function AdminLogin({ onBack }: Props) {
     </div>
   );
 }
+

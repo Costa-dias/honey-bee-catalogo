@@ -15,7 +15,7 @@ type AuthContextType = {
   passwordRecovery: boolean;
   clearPasswordRecovery: () => void;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
-  signUp: (email: string, password: string) => Promise<{ error: string | null }>;
+  signUp: (email: string, password: string, inviteCode: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
 };
 
@@ -54,6 +54,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setPasswordRecovery(true);
         clearRecoveryUrl();
       }
+    }).catch(() => {
+      if (active) setLoading(false);
     });
 
     return () => {
@@ -63,13 +65,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error: error?.message ?? null };
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+      return { error: error?.message ?? null };
+    } catch {
+      return { error: 'Não foi possível conectar. Confira sua conexão e tente novamente.' };
+    }
   };
 
-  const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
-    return { error: error?.message ?? null };
+  const signUp = async (email: string, password: string, inviteCode: string) => {
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: email.trim().toLowerCase(), password,
+        options: { data: { invite_code: inviteCode.trim() } },
+      });
+      return { error: error ? 'Não foi possível criar a conta. Confira o convite e o e-mail; se persistir, procure o proprietário.' : null };
+    } catch {
+      return { error: 'Não foi possível conectar. Tente novamente em alguns minutos.' };
+    }
   };
 
   const signOut = async () => {
@@ -101,3 +114,4 @@ export function useAuth() {
   if (!ctx) throw new Error('useAuth deve ser usado dentro de um AuthProvider');
   return ctx;
 }
+
