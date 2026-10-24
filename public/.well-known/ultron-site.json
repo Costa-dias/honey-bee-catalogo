@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "owner": "Costa-dias",
+  "host": "honey-bee-catalogo.onrender.com",
+  "repository": "Costa-dias/honey-bee-catalogo",
+  "registration": "fdb4a2ffc387567f50f10ab33511e20b",
+  "scope": [
+    "https-headers"
+  ]
+}
