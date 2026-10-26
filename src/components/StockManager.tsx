@@ -41,7 +41,8 @@ export function StockManager() {
       .from('stock_movements')
       .select('*')
       .order('recorded_at', { ascending: false });
-    if (!error && data) setMovements(data as StockMovement[]);
+    if (error) setError('Não foi possível carregar o estoque. Tente atualizar a página.');
+    else if (data) { setMovements(data as StockMovement[]); setError(null); }
     setLoading(false);
   };
 
@@ -50,18 +51,21 @@ export function StockManager() {
   }, []);
 
   const handleSave = async () => {
+    if (saving) return;
     if (!newMovement.product_name.trim()) {
       setError('O nome do produto é obrigatório.');
       return;
     }
 
+    const quantity = Number(newMovement.quantity);
+    if (!Number.isInteger(quantity) || quantity <= 0 || quantity > 1000000) { setError('Informe uma quantidade inteira positiva de até 1.000.000.'); return; }
     setSaving(true);
     setError(null);
 
     const payload = {
       product_name: newMovement.product_name.trim(),
       movement_type: newMovement.movement_type,
-      quantity: parseInt(newMovement.quantity) || 1,
+      quantity,
       notes: newMovement.notes.trim(),
     };
 
@@ -343,7 +347,7 @@ export function StockManager() {
                 </label>
                 <input
                   type="number"
-                  min="0"
+                  min="1"
                   value={newMovement.quantity}
                   onChange={(e) =>
                     setNewMovement({ ...newMovement, quantity: e.target.value })
