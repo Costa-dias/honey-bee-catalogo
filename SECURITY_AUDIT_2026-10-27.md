@@ -1,5 +1,20 @@
 # Auditoria de segurança — 27/10/2026
 
+## Atualização: integração e implantação autorizadas em 27/10/2026
+
+Após a auditoria inicial, o proprietário autorizou integrar as correções e realizar o deploy, mantendo o Supabase sem testes enquanto estiver hibernando. Esta seção registra o estado posterior e substitui as pendências de merge/deploy mencionadas no registro inicial abaixo. Os limites de auditoria e de testes não executados continuam válidos.
+
+Commit auditado integrado à `main`: `fe07bec1069a2e720f5f5808a3d063294e8e904e`.
+
+- honey-bee-catalogo: deploy **live**, concluído em 2026-10-27T13:25:09.482269Z (UTC), no commit auditado.
+
+Página pública, JavaScript e CSS responderam HTTP 200. Nenhuma chamada de teste ao Supabase, login ou banco foi feita nesta etapa, por solicitação expressa do proprietário. A integração com o Supabase permanece NÃO VERIFICADA enquanto hibernando.
+
+Nenhuma tabela, política RLS, configuração Supabase, credencial ou dado de usuário foi alterado. O registro abaixo descreve a etapa inicial, anterior à autorização de deploy. Esta atualização é somente documental e usa `[skip render]` para não provocar outro deploy.
+
+---
+
+
 Repositório: `Costa-dias/honey-bee-catalogo`. Responsável: Codex. Base auditada: `123a5fdbce873c9e480bcee79e3d729cf94657a6`.
 Branch de trabalho: `security/audit-2026-10-27`. Este relatório acompanha o commit de correção/documentação desta branch; consulte seu SHA no histórico do arquivo.
 
