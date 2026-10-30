@@ -1,6 +1,6 @@
 # Honey Bee — catálogo e orçamento de cestas
 
-**Versão 2.0.0 · atualizado em 30/10/2026**
+**Versão 2.0.1 · atualizado em 30/10/2026**
 
 Mudança de página estática para aplicação React/TypeScript com catálogo dinâmico, administração autenticada, estoque e orçamento revisável no WhatsApp.
 
@@ -42,3 +42,6 @@ A build estática gera `dist/` para o deploy configurado no Render. A consulta d
 ## Validação
 
 Os testes do orçamento cobrem subtotal, referência, quantidade e data inválidas, campos de entrega e indicação de frete/adicionais a confirmar. Para testar operações administrativas reais, o projeto Supabase precisa estar ativo e acessível.
+
+
+[Relatório detalhado da manutenção](docs/ATUALIZACOES_2026-10-30.md).

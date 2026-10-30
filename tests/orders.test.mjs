@@ -1,7 +1,7 @@
 import console from 'node:console';
 import assert from 'node:assert/strict';
 import { createServer } from 'vite';
-const server = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
+const server = await createServer({ optimizeDeps: { noDiscovery: true, include: [] }, server: { middlewareMode: true }, appType: 'custom' });
 try {
  const { orderMessage, todayISO } = await server.ssrLoadModule('/src/lib/orders.ts');
  const basket = { id: 'demo', name: 'Cesta demonstração', price: 120 };

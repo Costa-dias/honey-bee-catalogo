@@ -1,0 +1,13 @@
+{
+  "beforeVersion": "2.0.0",
+  "afterVersion": "2.0.1",
+  "directChanges": [
+    {
+      "library": "typescript-eslint",
+      "before": "8.72.0",
+      "after": "8.72.1",
+      "purpose": "Verifica código TypeScript e regras de qualidade."
+    }
+  ],
+  "removedDirect": []
+}
