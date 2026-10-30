@@ -1,5 +1,11 @@
 # Honey Bee — catálogo e orçamento de cestas
 
+**Versão 2.0.0 · atualizado em 30/10/2026**
+
+Mudança de página estática para aplicação React/TypeScript com catálogo dinâmico, administração autenticada, estoque e orçamento revisável no WhatsApp.
+
+[Histórico e critérios da versão](RELEASES.md).
+
 Aplicação React/TypeScript com catálogo público, painel administrativo, autenticação e dados no Supabase. [Abrir site](https://honey-bee-catalogo.onrender.com/).
 
 ## Experiência do cliente
