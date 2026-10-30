@@ -1,3 +1,4 @@
+import { ReleaseVersion } from '../ReleaseVersion';
 import { Instagram } from 'lucide-react';
 
 export function Footer() {
@@ -21,6 +22,7 @@ export function Footer() {
           Instagram
         </a>
       </p>
+      <p className="mt-4 text-bege-suave/90"><ReleaseVersion /></p>
     </footer>
   );
 }
